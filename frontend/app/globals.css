@@ -1,1 +1,266 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================================
+   Sovereign AI Workbench
+
+   Modelled on zerith.studio: warm paper ground, a very large
+   serif wordmark with a hand-drawn red squiggle, a hot
+   orange-to-red gradient button, dashed line decoration, and a
+   lot of air. Light is the default; dark is a quiet version of
+   the same design rather than a terminal.
+
+   Type : Playfair Display  — display (stands in for zerith's
+                              licensed Gascogne)
+          Manrope           — everything else (zerith's body face)
+          IBM Plex Mono     — code and filenames only
+   ============================================================ */
+
+@theme inline {
+    --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+    --font-display: var(--font-display-serif), ui-serif, Georgia, serif;
+    --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+    --font-heading: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-decor: var(--decor);
+    --color-destructive: var(--destructive);
+    --color-success: var(--success);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.5);
+    --radius-2xl: calc(var(--radius) * 2);
+
+    --shadow-card: var(--card-shadow);
+
+    /* zerith ships --text-display as a clamp(); same idea, bigger ceiling. */
+    --text-display: clamp(2.75rem, 7vw, 5.5rem);
+}
+
+/* ---------- Light (default): zerith paper ---------- */
+:root {
+    --background: #f4f2ee;
+    --foreground: #16161a;
+
+    --card: #ffffff;
+    --card-foreground: #16161a;
+
+    --popover: #ffffff;
+    --popover-foreground: #16161a;
+
+    /* The hot end of zerith's brand ramp. */
+    --primary: #ff5c00;
+    --primary-foreground: #ffffff;
+    --brand-from: #ff9500;
+    --brand-to: #ff2d00;
+
+    /* The charcoal pill used for the secondary button. */
+    --secondary: #363740;
+    --secondary-foreground: #ffffff;
+
+    --muted: #fbf9f4;
+    --muted-foreground: #6c6c6c;
+
+    --accent: #ece9e2;
+    --accent-foreground: #16161a;
+
+    --destructive: #e5342a;
+    --success: #2ba84a;
+
+    --border: #00000014;
+    --decor: #cdc7bd;
+    --input: #00000014;
+    --ring: #ff5c00;
+
+    --radius: 0.75rem;
+    --card-shadow: 0px 8px 28px #0000000f, 0px 1px 3px #0000000a;
+    --grain-opacity: 0.03;
+
+    --sidebar: #efece5;
+    --sidebar-foreground: #16161a;
+    --sidebar-primary: #ff5c00;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #e6e2d9;
+    --sidebar-accent-foreground: #16161a;
+    --sidebar-border: #00000014;
+    --sidebar-ring: #ff5c00;
+}
+
+/* ---------- Dark: the same design, dimmed ---------- */
+.dark {
+    --background: #17171a;
+    --foreground: #f4f2ee;
+
+    --card: #1f1f23;
+    --card-foreground: #f4f2ee;
+
+    --popover: #1f1f23;
+    --popover-foreground: #f4f2ee;
+
+    --primary: #ff7a1a;
+    --primary-foreground: #1a0d00;
+    --brand-from: #ffab2e;
+    --brand-to: #ff4d14;
+
+    --secondary: #f4f2ee;
+    --secondary-foreground: #17171a;
+
+    --muted: #232328;
+    --muted-foreground: #9d9a94;
+
+    --accent: #26262b;
+    --accent-foreground: #f4f2ee;
+
+    --destructive: #ff6b60;
+    --success: #4ade80;
+
+    --border: #ffffff14;
+    --decor: #3a3a41;
+    --input: #ffffff14;
+    --ring: #ff7a1a;
+
+    --card-shadow: 0px 8px 28px #00000052;
+    --grain-opacity: 0;
+
+    --sidebar: #131316;
+    --sidebar-foreground: #f4f2ee;
+    --sidebar-primary: #ff7a1a;
+    --sidebar-primary-foreground: #1a0d00;
+    --sidebar-accent: #232328;
+    --sidebar-accent-foreground: #f4f2ee;
+    --sidebar-border: #ffffff14;
+    --sidebar-ring: #ff7a1a;
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+    html {
+        @apply font-sans;
+        -webkit-font-smoothing: antialiased;
+    }
+    time,
+    [data-numeric] {
+        font-variant-numeric: tabular-nums;
+    }
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: var(--decor) transparent;
+    }
+}
+
+@layer utilities {
+    /*
+     * zerith's headings are lowercase serif with a trailing period —
+     * "zerith.", "featured works.", "about us."
+     */
+    .display {
+        @apply font-display lowercase;
+        font-size: var(--text-display);
+        font-weight: 700;
+        /*
+         * Display serif wants tight leading. The h1 carries pb-6, which is
+         * more than enough room for the descender on "sovereign." to render
+         * below a line box this short without being clipped.
+         */
+        line-height: 0.92;
+        letter-spacing: -0.02em;
+    }
+
+    /* The hot gradient pill. Flat — no halo, no inset shine. */
+    .btn-brand {
+        background-image: linear-gradient(
+            180deg,
+            var(--brand-from) 0%,
+            var(--brand-to) 100%
+        );
+        color: #ffffff;
+    }
+    .btn-brand:hover {
+        filter: brightness(1.06);
+    }
+
+    /* The charcoal pill beside it. */
+    .btn-dark {
+        background-color: var(--secondary);
+        color: var(--secondary-foreground);
+    }
+    .btn-dark:hover {
+        filter: brightness(1.12);
+    }
+}
+
+/* ---------- Motion ---------- */
+
+@keyframes dash-flow {
+    to {
+        stroke-dashoffset: -16px;
+    }
+}
+
+@keyframes rise-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes soft-pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.35;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .rise-in {
+        animation: rise-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    /* zerith animates its dashed decoration by drifting stroke-dashoffset. */
+    .dash-animate {
+        animation: dash-flow 900ms linear infinite;
+    }
+    .soft-pulse {
+        animation: soft-pulse 1.6s ease-in-out infinite;
+    }
+}
